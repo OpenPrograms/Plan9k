@@ -5,6 +5,7 @@
 local pipes = require("pipes")
 local filesystem = require("filesystem")
 local component = require("component")
+local event = require("event")
 
 os.setenv("LIBPATH", "/lib/?.lua;/usr/lib/?.lua;/home/lib/?.lua;./?.lua;/lib/?/init.lua;/usr/lib/?/init.lua;/home/lib/?/init.lua;./?/init.lua")
 os.setenv("PATH", "/usr/local/bin:/usr/bin:/bin:.")
@@ -258,7 +259,7 @@ end
 os.sleep(0)
 
 while true do
-    local sig = {computer.pullSignal()}
+    local sig = {event.pull()}
     if signal[sig[1]] then
         signal[sig[1]](table.unpack(sig))
     end
