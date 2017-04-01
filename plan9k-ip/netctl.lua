@@ -9,7 +9,11 @@ function start()
         return
     end
     for line in io.lines("/etc/netctl") do
-        if line:sub(1,1) ~= "#" and #line > 0 then
+        if line == "auto" then
+            for m in component.list("modem") do
+                ip("oc", "add", m)
+            end
+        elseif line:sub(1,1) ~= "#" and #line > 0 then
             ip(table.unpack(text.tokenize(line)))
         end
     end
