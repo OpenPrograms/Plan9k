@@ -153,17 +153,30 @@ kernel._G = _G
 
 kernel.io.println("Loading base modules")
 
-local modules = {}
+local allmodules = {}
 for _, file in ipairs(kernel.initd.invoke("list", "lib/modules/base")) do
     local path = "lib/modules/base/" .. file
     if not kernel.initd.isDirectory(path) then
-        table.insert(modules, {path = path, file = file,  name = file:match("[^0-9_%.]+")})
+        local mod = {path = path, file = file, name = file:match("[^0-9_%.]+"), override = (file:sub(-3) == "smd")}
+        table.insert(allmodules, mod)
     end
 end
 
+local modules = {}
+table.sort(allmodules, function(a, b) return a.file < b.file end)
+
+for i = 1, #allmodules do
+    if allmodules[i].override and modules[#modules].name == allmodules[i].name then
+        kernel.io.println("OVERRIDE MODULE " .. allmodules[i].name)
+        modules[#modules] = allmodules[i]
+    else
+        modules[#modules + 1] = allmodules[i]
+    end
+end
+
+allmodules = nil
 local moduleEnv = setmetatable({kernel = kernel}, {__index = _K})
 kernel.modules = {}
-table.sort(modules, function(a, b) return a.file < b.file end)
 for i = 1, #modules do
     kernel.io.println("Load module " .. modules[i].name)
     
