@@ -31,14 +31,16 @@ local function matchBits(a, pattern, n)
 end
 _G.matchBits = matchBits
 
-local function findBest4(to)
+local function findBest4(to) --random factor for equal metric?
     local best = nil
     local bestnet = -1
+    local bestmetric = math.huge
     for dest, routeGroup in pairs(routes4) do
         for n, route in ipairs(routeGroup) do
-            if route[SUBNET] > bestnet and matchBits(to, dest, route[SUBNET]) then
+            if (route[SUBNET] > bestnet or route[METRIC] < bestmetric) and matchBits(to, dest, route[SUBNET]) then
                 best = route
                 bestnet = route[SUBNET]
+                bestmetric = route[METRIC]
             end
         end
     end
