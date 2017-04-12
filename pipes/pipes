@@ -177,6 +177,7 @@ end
 allmodules = nil
 local moduleEnv = setmetatable({kernel = kernel}, {__index = _K})
 kernel.modules = {}
+kernel.loadableModules = modules
 for i = 1, #modules do
     kernel.io.println("Load module " .. modules[i].name)
     
@@ -195,6 +196,7 @@ for i = 1, #modules do
         kernel.panic()
     end
 end
+kernel.loadableModules = nil
 
 kernel.io.println("Starting base modules")
 
