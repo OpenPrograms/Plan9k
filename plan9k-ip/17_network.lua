@@ -52,7 +52,7 @@ end
 
 local udpNext = 0
 
-function api.open(port)
+local function openFor(port, pid)
     checkArg(1, port, "number", "nil")
     
     if not port then
@@ -68,8 +68,14 @@ function api.open(port)
         error("Port already open")
     end
     
-    udpOpen[port] = threading.currentThread.pid
+    udpOpen[port] = pid
     return setmetatable({port = port}, {__index = udpBase})
+end
+
+_G.openFor = openFor
+
+function api.open(port)
+    return openFor(port, threading.currentThread.pid)
 end
 
 kernel.modules.gc.onProcessKilled(function(thread)
