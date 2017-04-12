@@ -179,6 +179,10 @@ local moduleEnv = setmetatable({kernel = kernel}, {__index = _K})
 kernel.modules = {}
 kernel.loadableModules = modules
 for i = 1, #modules do
+    if not modules[i] then
+        break
+    end
+    
     kernel.io.println("Load module " .. modules[i].name)
     
     kernel.modules[modules[i].name] = {}
