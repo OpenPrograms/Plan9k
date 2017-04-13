@@ -67,7 +67,7 @@ function uuidBin(uuid)
     local undashed = uuid:gsub("-","")
     local high = tonumber(undashed:sub(1,16), 16)
     local low = tonumber(undashed:sub(17), 16)
-    return string.pack(">ll",  high, low)
+    return string.pack(">I8I8",  high, low)
 end
 
 function binUUID(uuid)
