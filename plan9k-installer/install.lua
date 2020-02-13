@@ -62,7 +62,7 @@ io.write("Installing " .. name .." to device " .. (choice.getLabel() or choice.a
 local distros = {
   {desc = "[offline] Plan9k - lightest, stable",                                params = {"--offline", "--mirror=/", "-SY", "plan9k"}},
   {desc = "[offline] Plan9k-extra - stable, contains tools(recomended!)",       params = {"--offline", "--mirror=/", "-SY", "plan9k-extra"}},
-  {desc = "[offline] Update - update installed offilne system",                 params = {"--offline", "--mirror=/", "-uY"}},
+  {desc = "[offline] Update - update installed offline system",                 params = {"--offline", "--mirror=/", "-uY"}},
   {desc = "[online]  Plan9k - lightest, experimental",                          params = {"-SYy", "plan9k"}},
   {desc = "[online]  Plan9k-extra - experimental, contains tools, docs",        params = {"-SYy", "plan9k-extra", "plan9k-docs"}},
   {desc = "[online]  StarOS - Plan9k-extra distro with additional tools",       params = {"-SYy", "staros"}},
